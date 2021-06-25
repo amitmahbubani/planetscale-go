@@ -62,10 +62,11 @@ func Dial(ctx context.Context, cfg *DialConfig) (*sql.DB, error) {
 	}
 
 	mysqlCfg := mysql.NewConfig()
-	if mysqlCfg != nil {
+	if cfg.MySQLConfig != nil {
 		// shallow-copy to avoid modifying user data
 		*mysqlCfg = *cfg.MySQLConfig
 	}
+	mysqlCfg.AllowNativePasswords = true
 	mysqlCfg.Addr = remoteAddr
 	mysqlCfg.Net = "tcp"
 	mysqlCfg.TLSConfig = key
